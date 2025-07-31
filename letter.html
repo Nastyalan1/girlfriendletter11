@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Greeting Card Letter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffeef8 0%, #ffdbe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Georgia', serif;
+    color: #8e003e;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .petal {
+    position: fixed;
+    top: -40px;
+    width: 32px;
+    height: 32px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.82;
+    user-select: none;
+    will-change: transform;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(320deg);
+    }
+  }
+
+  .card-container {
+    perspective: 1500px;
+    z-index: 2;
+  }
+
+  .card {
+    width: 660px;
+    height: 370px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
+    transform: rotateY(0deg);
+    transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 660px;
+    height: 370px;
+    border-radius: 30px;
+    box-shadow: 0 8px 36px rgba(232, 28, 97, 0.16);
+    backface-visibility: hidden;
+  }
+
+  .card-front {
+    background: #ff4b88;
+    background-image: radial-gradient(circle at center, #ff81a5 30%, #ff4b88 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.7em;
+    letter-spacing: 0.05em;
+    box-shadow:
+      inset 5px 5px 15px rgba(255, 255, 255, 0.26),
+      0 13px 28px rgba(255, 0, 130, 0.3);
+    z-index: 2;
+  }
+
+  .card-front .heart {
+    font-size: 4.4em;
+    animation: pulseHeart 2.4s infinite ease-in-out;
+    margin-top: 10px;
+  }
+
+  @keyframes pulseHeart {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.28); }
+  }
+
+  .card-back {
+    background: white;
+    padding: 32px 40px 28px 40px;
+    box-sizing: border-box;
+    color: #8e003e;
+    font-size: 1.13em;
+    line-height: 1.72;
+    text-align: left;
+    box-shadow: 0 8px 36px rgba(232, 28, 97, 0.08);
+    transform: rotateY(180deg);
+    z-index: 1;
+    /* SCROLLABLE */
+    overflow-y: auto;
+    max-height: 370px;
+  }
+
+  .card-back h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.1em;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #ff4b88;
+    user-select:none;
+  }
+
+  .signature {
+    margin-top: 33px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.47em;
+    text-align: right;
+    color: #ff4b88;
+  }
+
+  .card.open {
+    transform: rotateY(180deg);
+  }
+
+  /* Custom scrollbar for the letter */
+  .card-back::-webkit-scrollbar {
+    width: 7px;
+  }
+  .card-back::-webkit-scrollbar-track {
+    background: #ffeef8;
+    border-radius: 7px;
+  }
+  .card-back::-webkit-scrollbar-thumb {
+    background: #ffb6d5;
+    border-radius: 7px;
+    border: 2px solid #ffdbe2;
+  }
+
+  @media (max-width: 750px) {
+    .card,
+    .card-front,
+    .card-back {
+      width: 98vw;
+      height: 63vw;
+      max-width: 99vw;
+      max-height: 97vh;
+    }
+    .card-back {padding: 5vw;}
+    .card-back h1 {font-size: 1.1em;}
+    .signature {font-size: 1em;}
+    .card-front {font-size: 2em;}
+    .card-front .heart {font-size: 2em;}
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+  <div id="card" class="card" title="Click to open your letter">
+    <div class="card-front" aria-label="Greeting Card Front Cover">
+      <div>
+        <div>Happy Girlfriend&apos;s Day</div>
+        <div class="heart">💖</div>
+      </div>
+    </div>
+    <div class="card-back" aria-label="Greeting Card Letter Content" tabindex="0">
+      <h1>To My Beloved Harshita</h1>
+      <p>
+        My Kuchkii ,<br><br>
+        On this special day, I want to open my heart to you in the most beautiful way.I know i cant give you physical letters soo something new <br>
+        You are the best thing that happned to me, the smile that lifts my soul, and the warmth I cherish deeply.<br><br>
+        Every moment with you is a precious memory, I know i act stupid, persuvasue, jelous or whatever but all i want is you smile and see you happiest with and i want you to be my forever love.<br><br>
+        I love you with all my heart and promise to keep loving you more every single day.<br>
+        Yours always,
+      </p>
+      <div class="signature">Your V</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Card open/close toggle
+  const card = document.getElementById('card');
+  card.addEventListener('click', () => {
+    card.classList.toggle('open');
+    if(card.classList.contains('open')) {
+      setTimeout(() => {
+        document.querySelector('.card-back').focus();
+      }, 800);
+    }
+  });
+
+  // Rose petal falling animation
+  const petalSVG = [
+    `<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="17" rx="12" ry="13" fill="#ffd7ea"/><ellipse cx="15" cy="13" rx="10" ry="11" fill="#ffb6d5" opacity="0.7"/></svg>`,
+    `<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="14" cy="14" rx="8" ry="12" fill="#FF7CBF"/><ellipse cx="18" cy="19" rx="9" ry="7" fill="#ff95c8" opacity="0.8"/></svg>`,
+    `<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 6C23 8 15 29 9 26C2 23 8 6 16 6Z" fill="#ffabd5"/><ellipse cx="21" cy="18" rx="5" ry="9" fill="#ffcae2" opacity="0.7"/></svg>`
+  ];
+
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.style.left = (Math.random() * 100) + 'vw';
+    const duration = 5 + Math.random() * 6;
+    const delay = Math.random() * 6;
+    petal.style.animationDuration = duration + 's';
+    petal.style.animationDelay = delay + 's';
+    petal.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+    petal.innerHTML = petalSVG[Math.floor(Math.random()*petalSVG.length)];
+    document.body.appendChild(petal);
+    setTimeout(() => {
+      petal.remove();
+    }, (duration + delay) * 1000);
+  }
+
+  setInterval(() => createPetal(), 700);
+  for (let i = 0; i < 8; i++) setTimeout(createPetal, i*310);
+</script>
+
+</body>
+</html>
